@@ -176,14 +176,13 @@ export default function Navbar({ navigateTo }) {
                         {children.length > 0 && (
                           <ul className="mt-3 space-y-3 border-l border-gray-100 pl-3">
                             {children.map((child) => {
-                              const fullName = `${child.en} (${child.th})`
                               return (
                                 <li key={child.en}>
                                   <a
                                     href={href}
                                     onClick={(e) => {
                                       e.preventDefault()
-                                      navigateTo('category', title, fullName)
+                                      navigateTo('category', title, child.en)
                                       setIsMegaOpen(false)
                                     }}
                                     className="block text-xs text-gray-700 transition-colors hover:text-patina"

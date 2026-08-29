@@ -1,14 +1,13 @@
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import HorizontalGallery from './HorizontalGallery'
 
 const WORKS = [
-  { title: 'Twilight Facade Study', image: '/ช่องสามหมอ.jpg' },
-  { title: 'Modern Family Residence', image: '/บ้านฝรั่ง.jpg' },
-  { title: 'Courtyard House Renovation', image: '/v1.jpg' },
-  { title: 'Contemporary Retreat', image: '/ai render 25.jpg' },
-  { title: 'Stone Facade Estate', image: '/ai render 24.jpg' },
-  { title: 'Cafe Facade Study', image: '/LINE_NOTE_260806_1.jpg' },
+  { key: 'Twilight Facade Study', image: '/ช่องสามหมอ.jpg', alt: 'Twilight Facade Study' },
+  { key: 'Modern Family Residence', image: '/บ้านฝรั่ง.jpg', alt: 'Modern Family Residence' },
+  { key: 'Courtyard House Renovation', image: '/v1.jpg', alt: 'Courtyard House Renovation' },
+  { key: 'Contemporary Retreat', image: '/ai render 25.jpg', alt: 'Contemporary Retreat' },
+  { key: 'Stone Facade Estate', image: '/ai render 24.jpg', alt: 'Stone Facade Estate' },
+  { key: 'Cafe Facade Study', image: '/LINE_NOTE_260806_1.jpg', alt: 'Cafe Facade Study' },
 ]
 
 const fadeUp = {
@@ -21,27 +20,6 @@ const fadeUp = {
 }
 
 export default function FeaturedWorks() {
-  const scrollerRef = useRef(null)
-  const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(false)
-
-  const updateScrollState = () => {
-    const el = scrollerRef.current
-    if (!el) return
-    setCanScrollLeft(el.scrollLeft > 8)
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 8)
-  }
-
-  useEffect(() => {
-    updateScrollState()
-    window.addEventListener('resize', updateScrollState)
-    return () => window.removeEventListener('resize', updateScrollState)
-  }, [])
-
-  const scrollByAmount = (direction) => {
-    scrollerRef.current?.scrollBy({ left: direction * 600, behavior: 'smooth' })
-  }
-
   return (
     <section id="portfolio" className="bg-white py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -74,50 +52,9 @@ export default function FeaturedWorks() {
         whileInView="show"
         viewport={{ once: true, margin: '-80px' }}
         custom={0.2}
-        className="relative mt-14"
+        className="mt-14"
       >
-        <div
-          ref={scrollerRef}
-          onScroll={updateScrollState}
-          className="hide-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 lg:px-10"
-        >
-          {WORKS.map(({ title, image }) => (
-            <div
-              key={title}
-              className="aspect-video w-[80vw] shrink-0 snap-center overflow-hidden rounded-2xl lg:w-[60vw]"
-            >
-              <img
-                src={image}
-                alt={title}
-                draggable="false"
-                onContextMenu={(e) => e.preventDefault()}
-                className="h-full w-full rounded-2xl object-cover select-none"
-              />
-            </div>
-          ))}
-        </div>
-
-        {canScrollLeft && (
-          <button
-            type="button"
-            onClick={() => scrollByAmount(-1)}
-            aria-label="Scroll gallery left"
-            className="absolute top-1/2 left-4 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-gray-900 shadow-lg transition-colors hover:bg-gray-50 lg:left-8"
-          >
-            <ChevronLeft size={20} strokeWidth={1.75} />
-          </button>
-        )}
-
-        {canScrollRight && (
-          <button
-            type="button"
-            onClick={() => scrollByAmount(1)}
-            aria-label="Scroll gallery right"
-            className="absolute top-1/2 right-4 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-gray-900 shadow-lg transition-colors hover:bg-gray-50 lg:right-8"
-          >
-            <ChevronRight size={20} strokeWidth={1.75} />
-          </button>
-        )}
+        <HorizontalGallery items={WORKS} />
       </motion.div>
     </section>
   )
