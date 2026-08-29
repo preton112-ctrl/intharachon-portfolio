@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Outfit", "Inter", "Noto Sans Thai", sans-serif;
+  --font-sans: "Inter", "Noto Sans Thai", "Helvetica Neue", Arial, sans-serif;
+
+  --color-paper: #f7f7f5;
+  --color-ink: #1f2124;
+  --color-ink-soft: #6e7276;
+  --color-hairline: #dededa;
+  --color-patina: #55706a;
+  --color-patina-deep: #3e534e;
+  --color-patina-tint: #8fa8a1;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-24%);
+  }
+  to {
+    transform: translateX(24%);
+  }
+}
+
+.animate-sweep {
+  animation: sweep 26s cubic-bezier(0.22, 0.61, 0.36, 1) infinite alternate;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
